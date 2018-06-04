@@ -5,9 +5,8 @@ var guessList = [];
 var chosenWord;
 var copiedWord;
 var hiddenWord;
-var gameRunning;
 
-var targetWords = ["Taj Mahal", "Everest", "Mt Rushmore", "Yosemite", "The Great Wall of China", "The Pyramids of Giza", "Buckingham Palace "];
+var targetWords = ["Taj Mahal", "Everest", "Mt Rushmore", "Yosemite", "The Great Wall of China", "The Pyramids of Giza", "Buckingham Palace"];
 
 //MAIN GAME FUNCTIONS
 function gameInit() {
@@ -15,7 +14,7 @@ function gameInit() {
     guessesLeft = 12;
     guessList = [];
     chosenWord = targetWords[Math.floor(Math.random() * targetWords.length)];
-    copiedWord = chosenWord
+    copiedWord = chosenWord //This must be done because we mutilate the copiedWord and need choseWord to compare with. 
     hiddenWord = chosenWord.replace(/[^\s]/g, "_"); //This uses a regular expression to create a hidden word with only underscores and spaces
     gameDisplay(wins, guessesLeft, hiddenWord, guessList);
 }
@@ -50,15 +49,13 @@ String.prototype.replaceAt = function (index, replacement) {
 
 //MAIN GAME LOOP/LOGIC
 gameInit();
-gameDisplay(wins, guessesLeft, hiddenWord, guessList);
 document.onkeydown = function (event) {
-    var userGuess = event.key;
-    if (/^[a-z]{1}/.test(userGuess)) {
+    var userGuess = event.key.toLowerCase(); //Ensures caps lock doesn't affect input.
+    if (/^[a-z]{1}$/.test(userGuess)) { //Regular expression checks if the input is a-z and only one character long.
         var location = copiedWord.toLowerCase().indexOf(userGuess);
-        console.clear();
         if (location == -1) {
             if (guessList.indexOf(userGuess) !== -1) {
-                console.log("Already guessed");
+                $("#status").text("Already guessed");
             }
             else {
                 if (hiddenWord.indexOf(userGuess) == -1) {

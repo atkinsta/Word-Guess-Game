@@ -13,6 +13,15 @@ p {
 }
 
 img {
-    overflow: hidden;
-    max-width: 400px;
+    overflow: auto;
+    max-width: 500px;
+}
+
+div {
+    margin: 0 auto;
+}
+
+.clearfix {
+    overflow: auto;
+    margin: 0 auto;
 }
