@@ -1,3 +1,4 @@
+//GLOBAL VARIABLES
 var wins;
 var guessesLeft;
 var guessList = [];
@@ -6,31 +7,32 @@ var copiedWord;
 var hiddenWord;
 var gameRunning;
 
-var targetWords = ["Taj Mahal", "Everest", "Mt Rushmore", "Yosemite", "The Great Wall of China", "The Pyramids of Giza", "Buckingham Palace "]
+var targetWords = ["Taj Mahal", "Everest", "Mt Rushmore", "Yosemite", "The Great Wall of China", "The Pyramids of Giza", "Buckingham Palace "];
 
-
+//MAIN GAME FUNCTIONS
 function gameInit() {
     wins = 0;
     guessesLeft = 12;
     guessList = [];
     chosenWord = targetWords[Math.floor(Math.random() * targetWords.length)];
     copiedWord = chosenWord
-    hiddenWord = chosenWord.replace(/[^\s]/g, "_");
-    gameDisplay();
+    hiddenWord = chosenWord.replace(/[^\s]/g, "_"); //This uses a regular expression to create a hidden word with only underscores and spaces
+    gameDisplay(wins, guessesLeft, hiddenWord, guessList);
 }
 
 function gameWin() {
+    $("#winner").attr("src", "assets/images/" + chosenWord + ".jpg"); //have to put this before a new word is chosen
+    $("#status").text("You Win! The place was " + chosenWord);
     wins++;
     guessList = [];
     guessesLeft = 12;
     chosenWord = targetWords[Math.floor(Math.random() * targetWords.length)];
     copiedWord = chosenWord
     hiddenWord = chosenWord.replace(/[^\s]/g, "_");
-    console.log("You Win!");
 }
 
 function gameLoss() {
-    alert("You lost.");
+    $("#status").text("You lost.");
     gameInit();
 }
 
@@ -46,9 +48,9 @@ String.prototype.replaceAt = function (index, replacement) {
     return this.substr(0, index) + replacement + this.substr(index + replacement.length);
 }
 
-gameDisplay(wins, guessesLeft, hiddenWord, guessList);
+//MAIN GAME LOOP/LOGIC
 gameInit();
-console.log(hiddenWord);
+gameDisplay(wins, guessesLeft, hiddenWord, guessList);
 document.onkeydown = function (event) {
     var userGuess = event.key;
     if (/^[a-z]{1}/.test(userGuess)) {
