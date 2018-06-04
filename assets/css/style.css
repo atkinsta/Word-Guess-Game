@@ -1,14 +1,22 @@
+h1,
+h2,
+h3 {
+    font-family: 'Bowlby One SC', cursive;
+    font-size: 1.5em;
+}
+
 h1 {
-    font-family: "Roboto", sans-serif;
+    font-size: 2em;
+    padding-top: 1em;
 }
 
 h3 {
-    font-family: "Roboto", sans-serif;
+    padding-top: 1em;
 }
 
 p {
-    font-family: "Indie Flower", cursive;
-    font-size: 2em;
+    font-family: "Shadows into Light", cursive;
+    font-size: 3em;
     font-kerning: auto;
 }
 
@@ -21,7 +29,8 @@ div {
     margin: 0 auto;
 }
 
-.clearfix {
-    overflow: auto;
-    margin: 0 auto;
+body {
+    background-image: url("../images/background.png");
+    background-attachment: fixed;
+    background-position: center;
 }
