@@ -15,8 +15,6 @@ function gameInit() {
     guessesLeft = 12;
     guessList = [];
     chooseWord();
-    copiedWord = chosenWord; //This must be done because we mutilate the copiedWord and need choseWord to compare with. 
-    hiddenWord = chosenWord.replace(/[^\s]/g, "_"); //This uses a regular expression to create a hidden word with only underscores and spaces
     gameDisplay(wins, guessesLeft, hiddenWord, guessList);
 }
 
@@ -27,8 +25,6 @@ function gameWin() {
     guessList = [];
     guessesLeft = 12;
     chooseWord();
-    copiedWord = chosenWord;
-    hiddenWord = chosenWord.replace(/[^\s]/g, "_");
 }
 
 function gameLoss() {
@@ -47,7 +43,9 @@ function chooseWord() {
     //Removes the words as they're chosen, so you don't get the same word twice.
     if (targetWords.length > 0){
         chosenWord = targetWords[Math.floor(Math.random() * targetWords.length)];
-        targetWords.splice(targetWords.indexOf(chosenWord), 1) 
+        targetWords.splice(targetWords.indexOf(chosenWord), 1)
+        copiedWord = chosenWord; //This must be done because we mutilate the copiedWord and need choseWord to compare with. 
+        hiddenWord = chosenWord.replace(/[^\s]/g, "_"); //This uses a regular expression to create a hidden word with only underscores and spaces
     }
     else {
         alert("Wow, you beat the game! I have no words left for you. Refresh to replay!")
