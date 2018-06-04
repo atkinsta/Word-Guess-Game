@@ -44,13 +44,12 @@ function chooseWord() {
     if (targetWords.length > 0){
         chosenWord = targetWords[Math.floor(Math.random() * targetWords.length)];
         targetWords.splice(targetWords.indexOf(chosenWord), 1)
-        copiedWord = chosenWord; //This must be done because we mutilate the copiedWord and need choseWord to compare with. 
-        hiddenWord = chosenWord.replace(/[^\s]/g, "_"); //This uses a regular expression to create a hidden word with only underscores and spaces
+        copiedWord = chosenWord;                                    //This must be done because we mutilate the copiedWord and need choseWord to compare with. 
+        hiddenWord = chosenWord.replace(/[^\s]/g, "_");             //This uses a regular expression to create a hidden word with only underscores and spaces
     }
     else {
         alert("Wow, you beat the game! I have no words left for you. Refresh to replay!")
     }
-
 }
 
 // This function allows us to replace a character in a string at a specific index (Stack Overflow helped a lot with this)
@@ -61,26 +60,28 @@ String.prototype.replaceAt = function (index, replacement) {
 //MAIN GAME LOOP/LOGIC
 gameInit();
 document.onkeydown = function (event) {
-    var userGuess = event.key.toLowerCase(); //Ensures caps lock doesn't affect input.
-    if (/^[a-z]{1}$/.test(userGuess)) { //Regular expression checks if the input is a-z and only one character long.
+    var userGuess = event.key.toLowerCase();                        //Ensures caps lock doesn't affect input.
+    if (/^[a-z]{1}$/.test(userGuess)) {                             //Regular expression checks if the input is a-z and only one character long (avoids tab/backspace/ect being inputed).
         var location = copiedWord.toLowerCase().indexOf(userGuess);
-        if (location == -1) {
-            if (guessList.indexOf(userGuess) !== -1) {
+        if (location == -1) {                                       //If userGuess is NOT in the chosenWord
+            if (guessList.indexOf(userGuess) !== -1) {              //Checks if userGuess is in the array of already guessed characters
                 $("#status").text("Already guessed");
             }
-            else {
-                if (hiddenWord.indexOf(userGuess) == -1) {
+            else {                                                  //If not, minus one guess, add to array, and check to see if player lost.
+                if (hiddenWord.indexOf(userGuess) == -1) {          //Ensures we're not putting correct but repeat guesses into the guessList array.
                     guessesLeft--;
-                    guessList.push(userGuess);
+                    guessList.push(userGuess);      
                     if (guessesLeft === 0) {
                         gameLoss();
                     }
                 }
+                else                                                //Pops into status messege
+                    $("#status").text("You've already guessed this character correctly!");
             }
         }
-        else {
-            while (location !== -1) {
-                copiedWord = copiedWord.replaceAt(location, "0");
+        else {                                                      //If userGuess IS in the chosenWord
+            while (location !== -1) {                               //Ensures each instance of the userGuess is noted and replaced in hiddenWord. 
+                copiedWord = copiedWord.replaceAt(location, "0");   //"Nulls" out the copiedWord so it can check for other occurances of userGuess.
                 hiddenWord = hiddenWord.replaceAt(location, userGuess);
                 location = copiedWord.toLowerCase().indexOf(userGuess);
             }
@@ -88,5 +89,8 @@ document.onkeydown = function (event) {
                 gameWin();
         }
         gameDisplay(wins, guessesLeft, hiddenWord, guessList);
+    }
+    else {
+        $("#status").text("Please use only the keys a-z");
     }
 }
