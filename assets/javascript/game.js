@@ -9,7 +9,7 @@ var copiedWord;
 var hiddenWord;
 
 var targetWords = ["Taj Mahal", "Everest", "Mt Rushmore", "Yosemite", "The Great Wall of China", "The Pyramids of Giza", "Buckingham Palace", "Shanghai", "Rio De Janeiro",
-                    "Machu Picchu", "Chichen Itza", "The Colosseum", "Amazon Rainforest", "New York"];
+                    "Machu Picchu", "Moscow", "The Colosseum", "Amazon Rainforest", "New York"];
 
 //MAIN GAME FUNCTIONS
 function gameInit() {
